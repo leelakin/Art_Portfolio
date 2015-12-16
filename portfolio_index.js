@@ -151,9 +151,10 @@
 	app.controller("ImageController", function(){
 		this.imgs = pics;
 		this.pos = 0;
+		this.imgsConcat = [];
+		this.mobilePos = 0;
 		//this.activeCat = "illustration";
 		this.showImg = function(imgpicked){
-			console.log(imgpicked);
 			$("#display").html("<img src=\""+ imgpicked +"\" class=\"fullimg\">");
 			//full img in display --> ng-click launch this w/ picked img
 		};
@@ -199,7 +200,41 @@
 				$imgbox.slideDown(600);
 				$imgbox.addClass("open");
 			}
-
+		};
+		this.mobileHandler = function(){
+			//merge all 3 image (full) galleries into this.imgsConcat
+			for(var i=0, lengthz=this.imgs.length; i<lengthz; i++){ //loop through category objects array
+				for(var j=0, length2=this.imgs[i].files.length; j<length2 ;j++){ //for each category, loop through files array
+					this.imgsConcat.push(this.imgs[i].files[j].full);
+				}
+			}
+			//& display first img, show side arrows
+			var firstimg = this.imgsConcat[0];
+			$("#display").css("padding","0px");
+			$(".arrowmobile").css("display", "block");
+			$("#display").html("<img src=\""+ firstimg +"\" class=\"fullimg\">");
+			
+		};
+		this.mobileTurner = function(direction){//arrow back/forth go through this.imgsConcat
+			var images = this.imgsConcat;
+			if(direction==="right" && this.mobilePos<images.length-1){
+				this.mobilePos+=1;
+				if(this.mobilePos===32){
+					$(".arrowmobile.right").hide();
+				}else if(this.mobilePos===1){
+					$(".arrowmobile.left").show();
+				}
+			}else if(direction==="left" && this.mobilePos>0){
+				this.mobilePos-=1;
+				if(this.mobilePos===31){
+					$(".arrowmobile.right").show();
+				}else if(this.mobilePos===0){
+					$(".arrowmobile.left").hide();
+				}
+			}
+			console.log(this.mobilePos);
+			var disimg = images[this.mobilePos];
+			$("#display").html("<img src=\""+ disimg +"\" class=\"fullimg\">");
 		};
 	});
 })();

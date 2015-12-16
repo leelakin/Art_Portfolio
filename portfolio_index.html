@@ -14,6 +14,8 @@
 
 <div class="container">
 <div id="wrapper">
+
+	<img src="arrowleft.png" class="arrowmobile left" ng-click="imgCtrl.mobileTurner('left')"><img src="arrowright.png" class="arrowmobile right" ng-click="imgCtrl.mobileTurner('right')">
 	<div id="navbox">
 		<div id="wrappernav" ng-repeat="category in imgCtrl.imgs">
 		<!-- for each object in imgs array: -->
@@ -38,7 +40,10 @@
 	</div>
 
 	<div id="display">
-		<p class="placeholder">Click thumbnails to view full size.</p>
+		<div id="gonow" ng-click="imgCtrl.mobileHandler()">
+			<div>start gallery</div>
+		</div>
+		<p class="placeholder">Click thumbs to view full size.</p>
 	</div>
 </div>
 </div>
